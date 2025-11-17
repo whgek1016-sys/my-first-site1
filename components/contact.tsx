@@ -34,12 +34,12 @@ export function Contact() {
   
   // 기본 데이터
   const defaultInfo = {
-    name: "당신의 이름",
-    title: "직책/직무",
+    name: "임지원",
+    title: "대학생",
     company: "",
-    experience: "3년 경력",
-    phone: "010-0000-0000",
-    email: "your-email@example.com",
+    experience: "",
+    phone: "010-7637-7371",
+    email: "whgek1016@dankook.ac.kr",
     website: "",
     location: "당신의 위치",
     workTime: "평일 09:00 - 18:00",
