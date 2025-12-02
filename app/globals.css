@@ -228,3 +228,9 @@
     min-height: 100dvh;
   }
 }
+@layer components {
+  .motto-section {
+    background-color: #020617 !important; /* 남색 배경 */
+    color: #f9fafb !important;            /* 거의 흰색 글자 */
+  }
+}

@@ -2,14 +2,13 @@ import type React from "react"
 import type { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { InlineEditorProvider } from "@/contexts/inline-editor-context"
-import { SiteTitle } from "@/components/site-title"
 import { getMetadata } from "@/lib/metadata"
 import "./globals.css"
 
 const metadataInfo = getMetadata()
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: metadataInfo.siteTitle,
   description: metadataInfo.description,
   keywords: ["포트폴리오", "개발자", "프론트엔드", "웹개발"],
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "나의 포트폴리오",
     images: [
       {
-        url: "/api/og-image", // 동적 OG 이미지 API
+        url: "/api/og-image",
         width: 1200,
         height: 630,
         alt: "프로필 이미지",
@@ -57,25 +56,25 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        <link 
-          rel="stylesheet" 
-          as="style" 
+        <link
+          rel="stylesheet"
+          as="style"
           crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" 
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         {/* 카카오톡 공유 최적화 */}
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
       </head>
       <body className="font-pretendard" suppressHydrationWarning>
-        <ThemeProvider 
-          attribute="class" 
-          defaultTheme="system" 
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <InlineEditorProvider>
-            <SiteTitle />
+            {/* 🔻 SiteTitle 제거해서 상단 네비바 없앰 */}
             {children}
           </InlineEditorProvider>
         </ThemeProvider>
