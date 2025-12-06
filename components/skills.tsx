@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   ResponsiveContainer,
   RadarChart,
@@ -10,7 +11,7 @@ import {
   Radar,
 } from "recharts";
 
-// 레이더 차트용 데이터
+// 🔹 레이더 차트 데이터
 const radarData = [
   { name: "부동산 금융 / PF 구조", value: 9 },
   { name: "신탁·REITs 분석", value: 9 },
@@ -19,8 +20,87 @@ const radarData = [
   { name: "발표·커뮤니케이션", value: 8 },
 ];
 
+type YearType = "2018" | "2022" | "2023" | "2024";
+
+// 🔹 연도별 상세 내용 (학업 / 대외활동 분리)
+const yearDetails: Record<YearType, string> = {
+  "2018": [
+    "［학업 / 학력］",
+    "- 서울 중앙대학교사범대학부속고등학교",
+    "- 2020년 2월 고등학교 졸업",
+  ].join("\n"),
+
+  "2022": [
+    "［학업 / 성적］",
+    "- 단국대학교 입학",
+    "［대외활동］",
+    "- 홍릉 도시재생 크리에이터 ‘마케터스’ 팀 활동",
+    "  · ‘응답하라 2000: 회기동 미션 투어’·‘회기동 레시피’ 프로그램 기획·운영·홍보",
+  ].join("\n"),
+
+  "2023": [
+    "［대외활동］",
+    "- 제34회 공인중개사 자격시험 준비 및 합격 (2023.10)",
+    "- 법무법인 굿플랜 법률 원고 작성 프리랜서 시작 (현재까지 지속)",
+    "  · 부동산·법률 관련 블로그 콘텐츠 기획·작성",
+  ].join("\n"),
+
+  "2024": [
+    "［학업 / 성적］",
+    "- 도시계획·부동산학부로 전과 후 전공 심화",
+    "",
+    "［대외활동］",
+    "- 학술동아리 URID 12기 활동 및 수료",
+    "- URID 학술발표회 최우수상 수상 (2024.04)",
+    "- URID 12기 우수회원 상장 수여 (2024.06)",
+    "- URID 13기 대외교류팀장으로 활동 (2024.09~12)",
+    "- 법무법인 굿플랜 법률 원고 프리랜서 활동 지속",
+  ].join("\n"),
+};
+
+// 🔹 자격증 / 활동 이미지 (파일명은 public/uploads 에 이 이름으로 저장)
+type Certificate = {
+  title: string;
+  date: string;
+  file: string;
+};
+
+const certificates: Certificate[] = [
+  {
+    title: "공인중개사 자격증",
+    date: "2023.12.12",
+    file: "agent-license.jpg",
+  },
+  {
+    title: "홍릉 도시재생 현장지원센터",
+    date: "2022.12.12",
+    file: "hongneung-creators-certificate.jpg",
+  },
+  {
+    title: "URID 12기 수료증",
+    date: "2024.06.06",
+    file: "urid-12-completion.jpg",
+  },
+  {
+    title: "URID 12기 우수회원 상장",
+    date: "2024.06.06",
+    file: "urid-12-best-member.jpg",
+  },
+  {
+    title: "URID 12기 발표회 최우수상",
+    date: "2024.04.11",
+    file: "urid-12-best-presentation.jpg",
+  },
+  {
+    title: "URID 13기 수료증",
+    date: "2024.12.05",
+    file: "urid-13-completion.jpg",
+  },
+];
+
 export function Skills() {
-  const [openYear, setOpenYear] = useState<null | "2022" | "2023" | "2024">(null);
+  const [openYear, setOpenYear] = useState<YearType | null>(null);
+  const [openCert, setOpenCert] = useState<Certificate | null>(null);
 
   return (
     <section
@@ -28,115 +108,244 @@ export function Skills() {
       className="w-full pt-10 pb-20 md:pt-12 md:pb-24 bg-slate-950 text-white"
     >
       <div className="max-w-5xl mx-auto px-6 space-y-16">
-        {/* 🟢 Timeline Section (가로) */}
-        <div className="bg-slate-800 text-white rounded-3xl p-8 shadow-lg space-y-6">
+        {/* ⏳ Timeline */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="bg-slate-800 text-white rounded-3xl p-8 shadow-lg space-y-6"
+        >
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <span>⏳</span> Timeline
           </h2>
-          {/* ⬇️ 안내 문장만 추가 */}
           <p className="text-xs text-slate-400">
-            연도를 클릭하시면 각 년도의 상세 활동이 모달로 표시됩니다.
+            연도를 클릭하면 해당 시기의 학업 성적과 대외활동이 함께
+            표시됩니다.
           </p>
 
           <div className="relative mt-2">
-            {/* 가로 라인 (데스크탑에서만 표시) */}
             <div className="hidden md:block absolute top-5 left-0 w-full h-[2px] bg-slate-600" />
 
             <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-0 relative">
-              {/* 2022 */}
-              <div
-                className="flex flex-col items-start md:items-center md:w-1/3 text-left md:text-center transition-transform duration-200 hover:-translate-y-1 hover:scale-[1.02] cursor-pointer"
-                onClick={() => setOpenYear("2022")}
+              {/* 2018 ~ 2020 고등학교 */}
+              <motion.button
+                type="button"
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setOpenYear("2018")}
+                className="flex flex-col items-start md:items-center md:w-1/4 text-left md:text-center cursor-pointer"
               >
-                <div className="w-4 h-4 bg-white rounded-full border-2 border-white md:mb-0 mb-2 shadow-md animate-pulse" />
+                <div className="w-4 h-4 bg-white rounded-full border-2 border-white mb-2 shadow-md" />
+                <h3 className="mt-2 md:mt-4 font-semibold">2018 ~ 2020</h3>
+                <p className="text-sm mt-1 text-slate-300">
+                  중앙대학교사범대학부속고등학교
+                  <br />
+                  졸업
+                </p>
+              </motion.button>
+
+              {/* 2022 */}
+              <motion.button
+                type="button"
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setOpenYear("2022")}
+                className="flex flex-col items-start md:items-center md:w-1/4 text-left md:text-center cursor-pointer"
+              >
+                <div className="w-4 h-4 bg-white rounded-full border-2 border-white mb-2 shadow-md" />
                 <h3 className="mt-2 md:mt-4 font-semibold">2022</h3>
                 <p className="text-sm mt-1 text-slate-300">
-                  단국대학교 입학
+                  단국대 입학
                   <br />
-                  홍릉 도시재생 현장지원센터 활동
+                  홍릉 도시재생 현장지원센터
                 </p>
-              </div>
+              </motion.button>
 
               {/* 2023 */}
-              <div
-                className="flex flex-col items-start md:items-center md:w-1/3 text-left md:text-center transition-transform duration-200 hover:-translate-y-1 hover:scale-[1.02] cursor-pointer"
+              <motion.button
+                type="button"
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setOpenYear("2023")}
+                className="flex flex-col items-start md:items-center md:w-1/4 text-left md:text-center cursor-pointer"
               >
-                <div className="w-4 h-4 bg-white rounded-full border-2 border-white md:mb-0 mb-2 shadow-md animate-pulse" />
+                <div className="w-4 h-4 bg-white rounded-full border-2 border-white mb-2 shadow-md" />
                 <h3 className="mt-2 md:mt-4 font-semibold">2023</h3>
                 <p className="text-sm mt-1 text-slate-300">
-                  공인중개사 시험 준비
+                  공인중개사 준비·합격
                   <br />
-                  법무법인 굿플랜 블로그 마케팅 시작
+                  법무법인 굿플랜 프리랜서 시작
                 </p>
-              </div>
+              </motion.button>
 
               {/* 2024 ~ 현재 */}
-              <div
-                className="flex flex-col items-start md:items-center md:w-1/3 text-left md:text-center transition-transform duration-200 hover:-translate-y-1 hover:scale-[1.02] cursor-pointer"
+              <motion.button
+                type="button"
+                whileHover={{ y: -4, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setOpenYear("2024")}
+                className="flex flex-col items-start md:items-center md:w-1/4 text-left md:text-center cursor-pointer"
               >
-                <div className="w-4 h-4 bg-white rounded-full border-2 border-white md:mb-0 mb-2 shadow-md animate-pulse" />
+                <div className="w-4 h-4 bg-white rounded-full border-2 border-white mb-2 shadow-md" />
                 <h3 className="mt-2 md:mt-4 font-semibold">2024 ~</h3>
                 <p className="text-sm mt-1 text-slate-300">
-                  도시계획·부동산학부 전과
+                  전과 · URID 활동
                   <br />
-                  굿플랜 프리랜서로 계속 활동 중
+                  굿플랜 프리랜서 지속
                 </p>
-              </div>
+              </motion.button>
             </div>
-          </div>
-        </div>
 
-        {/* 🛠 Skills + Certifications Section */}
-        <div className="bg-slate-800 rounded-3xl p-8 shadow-lg space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mt-6 flex flex-wrap gap-2 text-[11px] text-slate-300"
+            >
+              <span className="px-2 py-1 rounded-full bg-slate-700/70 border border-slate-500/80">
+                📌 학기 성적우수자 4회
+              </span>
+              <span className="px-2 py-1 rounded-full bg-slate-700/70 border border-slate-500/80">
+                📌 공인중개사 자격 취득
+              </span>
+              <span className="px-2 py-1 rounded-full bg-slate-700/70 border border-slate-500/80">
+                📌 URID 최우수상 · 우수회원
+              </span>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* 🛠 Skills & Certifications */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="bg-slate-800 rounded-3xl p-8 shadow-lg space-y-8"
+        >
           <h2 className="text-2xl font-bold flex items-center gap-2">
             <span>📚</span> Skills & Certifications
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* LEFT – Skills */}
             <div>
               <h3 className="font-semibold text-xl mb-3">Skills</h3>
               <ul className="space-y-3 text-base">
                 <li>• 부동산 금융 / PF 구조 분석</li>
-                <li>• 부동산 신탁 구조 해석</li>
+                <li>• 부동산 신탁·REITs 구조 해석</li>
                 <li>• 시계열 분석 (ADF, VAR, Granger 등)</li>
-                <li>• Python 데이터 분석</li>
-                <li>• 리포트 작성 / 프레젠테이션</li>
+                <li>• Python 기반 데이터 분석</li>
+                <li>• 리서치·보고서·발표자료 작성</li>
+                <li>• 법무법인 굿플랜 법률·부동산 콘텐츠 기획·집필</li>
               </ul>
             </div>
 
-            {/* RIGHT – Certifications */}
             <div>
               <h3 className="font-semibold text-xl mb-3">Certifications</h3>
               <ul className="space-y-3 text-base">
-                <li>• 공인중개사</li>
-                <li>• 부동산·금융 관련 프로젝트 다수</li>
+                <li>• 공인중개사 (제34회, 2023)</li>
+                <li>• 홍릉 도시재생 크리에이터 활동 수료</li>
+                <li>• URID 12·13기 수료 및 최우수상·우수회원</li>
                 <li className="text-sm text-slate-400">
-                  📌 투자자산운용사 준비 예정
+                  📌 향후 투자자산운용사 등 금융 관련 자격 준비 예정
                 </li>
               </ul>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* 🔵 Skill Radar Chart Section */}
+        {/* 🔵 Skill Radar */}
         <SkillsRadar />
+
+        {/* 🖼 Certificates & Records */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="bg-slate-800 rounded-3xl p-8 shadow-lg space-y-6"
+        >
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <span>🖼</span> Certificates & Records
+          </h2>
+          <p className="text-xs text-slate-400">
+            주요 자격증과 활동을 증명하는 원본 이미지입니다. (이미지 파일은
+            public/uploads 폴더에 위 파일명으로 배치해주세요.)
+          </p>
+
+          {/* 🎥 대외활동 소개 영상 (자동재생 / 무음) */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 0.5 }}
+            className="rounded-2xl overflow-hidden bg-black border border-slate-700/80 shadow-md"
+          >
+            <div className="aspect-video w-full">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/Ve5npKkEUuQ?autoplay=1&mute=1&loop=1&playlist=Ve5npKkEUuQ"
+                title="대외활동 소개 영상"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <div className="px-4 py-3 border-t border-slate-700/70">
+              <p className="text-sm font-semibold">
+                URID · 도시재생 주요 대외활동 영상
+              </p>
+              <p className="text-xs text-slate-400 mt-1">
+                포트폴리오와 연계된 활동 하이라이트 클립입니다.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* 📜 자격증 그리드 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {certificates.map((cert) => (
+              <motion.figure
+                key={cert.title}
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="rounded-2xl overflow-hidden bg-slate-900/80 border border-slate-700/70 shadow-md cursor-pointer"
+                onClick={() => setOpenCert(cert)}
+              >
+                <div className="h-40 w-full overflow-hidden bg-slate-900 flex items-center justify-center">
+                  <img
+                    src={`/uploads/${cert.file}`}
+                    alt={cert.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <figcaption className="p-3">
+                  <p className="text-sm font-semibold">{cert.title}</p>
+                  <p className="text-xs text-slate-400 mt-1">{cert.date}</p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
-      {/* 연도 상세 모달 (새로 추가) */}
+      {/* 연도 상세 모달 */}
       {openYear && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-slate-900 rounded-2xl p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-3">{openYear} 상세</h3>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            className="bg-slate-900 rounded-2xl p-6 max-w-md w-full mx-4"
+          >
+            <h3 className="text-lg font-semibold mb-3">
+              {openYear === "2018"
+                ? "2018 ~ 2020 활동 요약"
+                : openYear === "2024"
+                ? "2024 ~ 현재 활동 요약"
+                : `${openYear} 활동 요약`}
+            </h3>
             <p className="text-sm text-slate-300 whitespace-pre-line">
-              {openYear === "2022" &&
-                "2022년에 했던 구체적인 활동 요약을 적어주세요."}
-              {openYear === "2023" &&
-                "2023년에 했던 구체적인 활동 요약을 적어주세요."}
-              {openYear === "2024" &&
-                "2024~현재까지의 활동 요약을 적어주세요."}
+              {yearDetails[openYear]}
             </p>
             <button
               onClick={() => setOpenYear(null)}
@@ -144,17 +353,37 @@ export function Skills() {
             >
               닫기
             </button>
-          </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* 자격증 확대 모달 */}
+      {openCert && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 cursor-pointer"
+          onClick={() => setOpenCert(null)}
+        >
+          <img
+            src={`/uploads/${openCert.file}`}
+            alt={openCert.title}
+            className="max-h-[90%] max-w-[90%] rounded-xl shadow-2xl"
+          />
         </div>
       )}
     </section>
   );
 }
 
-// 같은 파일 안에 레이더 차트 컴포넌트 정의
+// 🔵 레이더 차트 – 스크롤할 때마다 위에서 살짝 커지면서 등장
 function SkillsRadar() {
   return (
-    <div className="w-full h-80 rounded-3xl bg-slate-900/80 border border-white/10 backdrop-blur-xl p-6 flex flex-col">
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 0.6 }}
+      className="w-full h-80 rounded-3xl bg-slate-900/80 border border-white/10 backdrop-blur-xl p-6 flex flex-col"
+    >
       <div className="mb-4">
         <h3 className="text-sm font-semibold text-slate-100">Skill Radar</h3>
         <p className="text-xs text-slate-400 mt-1">
@@ -181,6 +410,7 @@ function SkillsRadar() {
               stroke="#38bdf8"
               fill="#38bdf8"
               fillOpacity={0.35}
+              animationDuration={1000}
             />
           </RadarChart>
         </ResponsiveContainer>
@@ -195,6 +425,6 @@ function SkillsRadar() {
           보완 중: Python 분석 스택
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }

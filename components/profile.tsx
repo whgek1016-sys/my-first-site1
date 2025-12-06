@@ -143,7 +143,7 @@ export function Profile() {
                   <p>
                     <span className="font-semibold">이메일</span> · whgek1016@dankook.ac.kr
                   </p>
-                    <p>
+                  <p>
                     <span className="font-semibold">GitHub</span> · github.com/whgek1016-sys
                   </p>
                 </div>
@@ -178,18 +178,22 @@ export function Profile() {
             </h2>
 
             <p className="text-sm md:text-base text-slate-200 text-center md:text-left leading-relaxed">
-              PF·신탁·REITs를 직접 분석하며 구조 이해를 쌓고 있습니다.
+              “PF·신탁·REITs를 실제 사례로 분석하며, 개발·금융·법률이 만나는 구조의 흐름을 해석합니다.
+              <br className="hidden md:block" />
+              데이터·문헌·현장 정보를 결합해 복잡한 구조를 명확한 인사이트로 재구성합니다.”
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {["#꼼꼼한", "#세심한", "#계획러", "#INTJ"].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-4 py-1.5 rounded-full bg-slate-800/90 border border-slate-600 text-xs md:text-sm text-slate-100"
-                >
-                  {tag}
-                </span>
-              ))}
+              {["#구조덕후", "#법·금융교차점", "#세심한분석", "#실증기반", "#INTJ"].map(
+                (tag) => (
+                  <span
+                    key={tag}
+                    className="px-4 py-1.5 rounded-full bg-slate-800/90 border border-slate-600 text-xs md:text-sm text-slate-100"
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
             </div>
           </div>
         </motion.div>

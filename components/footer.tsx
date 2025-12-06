@@ -13,7 +13,7 @@ export function Footer() {
   const defaultInfo = {
     showFooter: true,
     name: "임지원",
-    description: "당신을 소개하는 짧은 문구를 작성해주세요. ",
+    description: "부동산이 아닌 부동삶을 추구합니다. ",
     showContactInfo: true,
     contactTitle: "연락처",
     phone: "010-7637-7371",

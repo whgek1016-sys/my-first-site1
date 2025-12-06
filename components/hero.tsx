@@ -5,7 +5,7 @@ import { useTypewriter } from "react-simple-typewriter";
 export function Hero() {
   // 🔥 타이핑 애니메이션
   const [text] = useTypewriter({
-    words: ["복잡한 구조를 쉽게 정리하는 부동산 금융 분석가"],
+    words: ["부동산을 넘어, 부동삶이라는 가치로"],
     loop: 0,            // 반복 없음
     typeSpeed: 60,      // 타이핑 속도
     deleteSpeed: 40,    // 삭제 속도
