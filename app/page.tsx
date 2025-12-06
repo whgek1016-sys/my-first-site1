@@ -27,4 +27,3 @@ export default function Home() {
     </main>
   );
 }
-<p>BUILD TEST 1234</p>
