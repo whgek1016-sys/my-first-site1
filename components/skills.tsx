@@ -9,6 +9,12 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
 } from "recharts";
 
 // 🔹 레이더 차트 데이터
@@ -54,11 +60,12 @@ const yearDetails: Record<YearType, string> = {
     "- URID 학술발표회 최우수상 수상 (2024.04)",
     "- URID 12기 우수회원 상장 수여 (2024.06)",
     "- URID 13기 대외교류팀장으로 활동 (2024.09~12)",
+    "- 단러닝클럽 Best Practice 공모전 장려상 수상 (2024.08)",
     "- 법무법인 굿플랜 법률 원고 프리랜서 활동 지속",
   ].join("\n"),
 };
 
-// 🔹 자격증 / 활동 이미지 (파일명은 public/uploads 에 이 이름으로 저장)
+// 🔹 자격증 / 활동 이미지
 type Certificate = {
   title: string;
   date: string;
@@ -72,7 +79,7 @@ const certificates: Certificate[] = [
     file: "agent-license.jpg",
   },
   {
-    title: "홍릉 도시재생 현장지원센터",
+    title: "홍릉 도시재생 크리에이터 수료증",
     date: "2022.12.12",
     file: "hongneung-creators-certificate.jpg",
   },
@@ -96,6 +103,20 @@ const certificates: Certificate[] = [
     date: "2024.12.05",
     file: "urid-13-completion.jpg",
   },
+  {
+    title: "단러닝클럽 Best Practice 공모전 장려상",
+    date: "2024.08.13",
+    file: "learning-club-best-practice.jpg",
+  },
+];
+
+// 🔹 학기별 GPA 데이터
+const gpaData = [
+  { term: "2022-1", gpa: 4.26 },
+  { term: "2022-2", gpa: 4.25 },
+  { term: "2024-1", gpa: 3.79 }, // 43.79 → 3.79 로 반영
+  { term: "2024-2", gpa: 4.0 },  // 4..00 → 4.00
+  { term: "2025-1", gpa: 4.14 },
 ];
 
 export function Skills() {
@@ -211,7 +232,7 @@ export function Skills() {
                 📌 공인중개사 자격 취득
               </span>
               <span className="px-2 py-1 rounded-full bg-slate-700/70 border border-slate-500/80">
-                📌 URID 최우수상 · 우수회원
+                📌 URID 최우수상 · 우수회원 · 단러닝클럽 장려상
               </span>
             </motion.div>
           </div>
@@ -248,6 +269,7 @@ export function Skills() {
                 <li>• 공인중개사 (제34회, 2023)</li>
                 <li>• 홍릉 도시재생 크리에이터 활동 수료</li>
                 <li>• URID 12·13기 수료 및 최우수상·우수회원</li>
+                <li>• 단러닝클럽 Best Practice 공모전 장려상 (2024-1학기)</li>
                 <li className="text-sm text-slate-400">
                   📌 향후 투자자산운용사 등 금융 관련 자격 준비 예정
                 </li>
@@ -258,6 +280,9 @@ export function Skills() {
 
         {/* 🔵 Skill Radar */}
         <SkillsRadar />
+
+        {/* 📈 학기별 GPA 그래프 */}
+        <AcademicPerformance />
 
         {/* 🖼 Certificates & Records */}
         <motion.div
@@ -272,7 +297,7 @@ export function Skills() {
           </h2>
           <p className="text-xs text-slate-400">
             주요 자격증과 활동을 증명하는 원본 이미지입니다. (이미지 파일은
-            public/uploads 폴더에 위 파일명으로 배치해주세요.)
+            public/uploads 폴더에 아래 파일명으로 배치해주세요.)
           </p>
 
           {/* 🎥 대외활동 소개 영상 (자동재생 / 무음) */}
@@ -283,7 +308,6 @@ export function Skills() {
             transition={{ duration: 0.5 }}
             className="rounded-2xl overflow-hidden bg-black border border-slate-700/80 shadow-md"
           >
-            {/* 고정 높이 줘서 항상 보이게 */}
             <div className="w-full h-56 md:h-64 lg:h-72">
               <iframe
                 className="w-full h-full"
@@ -425,6 +449,63 @@ function SkillsRadar() {
         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-1 border border-emerald-400/40">
           보완 중: Python 분석 스택
         </span>
+      </div>
+    </motion.div>
+  );
+}
+
+// 📈 학기별 GPA 라인 차트
+function AcademicPerformance() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.3 }}
+      transition={{ duration: 0.6 }}
+      className="w-full h-80 rounded-3xl bg-slate-900/80 border border-white/10 backdrop-blur-xl p-6 flex flex-col"
+    >
+      <div className="mb-4 flex flex-col gap-1">
+        <h3 className="text-sm font-semibold text-slate-100">
+          Academic Performance
+        </h3>
+        <p className="text-xs text-slate-400">
+            학기별 GPA 추이: 누적 평균 평점 (4.08/4.5)
+        </p>
+      </div>
+
+      <div className="flex-1">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={gpaData} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" />
+            <XAxis
+              dataKey="term"
+              tick={{ fill: "#e5e7eb", fontSize: 10 }}
+            />
+            <YAxis
+              domain={[3.0, 4.5]}
+              tick={{ fill: "#e5e7eb", fontSize: 10 }}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#020617",
+                border: "1px solid #4b5563",
+                borderRadius: "0.5rem",
+                fontSize: 12,
+                color: "#e5e7eb",
+              }}
+              formatter={(value) => [`GPA ${value}`, "학기 성적"]}
+              labelFormatter={(label) => `${label} 학기`}
+            />
+            <Line
+              type="monotone"
+              dataKey="gpa"
+              stroke="#38bdf8"
+              strokeWidth={2}
+              dot={{ r: 3, stroke: "#0ea5e9", strokeWidth: 1 }}
+              activeDot={{ r: 5 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </motion.div>
   );

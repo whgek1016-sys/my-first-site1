@@ -16,19 +16,185 @@ type ProjectItem = {
   title: string
   description: string
   pdf?: string
+  excel?: string   // 🔹 엑셀 링크 추가
 }
 
 export function Projects() {
   const { getData, saveData, isEditMode, saveToFile } = useInlineEditor()
 
-  // 기본 데이터
   const defaultInfo = {
     title: "Projects",
-    subtitle: "도시·금융·법률을 넘나들며 구조 분석과 실증 검증을 수행한 융합형 프로젝트 포트폴리오입니다.",
+    subtitle:
+      "도시·금융·법률을 넘나들며 구조 분석과 실증 검증을 수행한 융합형 프로젝트 포트폴리오입니다.",
     initialDisplay: 6,
     loadMoreCount: 6,
-    background: {"image":"/uploads/projects-background-1764474166626.png","video":"","color":"","opacity":0.5},
-    projects: [{"image":"/uploads/project-0-1764136569015.png","video":"","title":"「프로젝트 리츠의 구조적 특징과 PF 대출의 대체 가능성에 대한 실증적 고찰」","description":"-금융구조도 설계와 정책방안, 3기 신도시 적용 검토를 중심으로-","pdf":"/uploads/reits-pf-study.pdf"},{"image":"/uploads/project-1764136690001-1764136690096.png","video":"","title":"「주택담보대출금리의 지연효과에 관한 실증분석」","description":"-코로나19 전후 주택시장 주요 지표의 비교를 중심으로","pdf":"/uploads/home-mortgage-interest-analysis.pdf"},{"image":"/uploads/project-1764155454020-1764155456104.png","video":"","title":"스트레스 DSR 도입 이후 주택금융시장 변화 분석 ","description":".","pdf":"/uploads/stress-dsr-housing-finance-analysis.pdf"},{"image":"/uploads/project-1764155573820-1764155573883.png","video":"","title":"씨드큐브 창동 사례로 본 공공 리츠 운영 리스크와 개선 방안 연구 ","description":"연구 ","pdf":"/uploads/seedsquare-changdong-public-reit-analysis.pdf"},{"image":"/uploads/project-1764155617696-1764155617749.png","video":"","title":"세운상가 3-2. 3구역 사례를 통해 본 부동산 PF구조의 가능성과 한계 ","description":"연구","pdf":"/uploads/seun-sanga-pf-structure-risk.pdf"},{"image":"/uploads/project-1764155793327-1764155793489.png","video":"","title":"평택시 동삭동 라움 프라자 신축 사업 PF ","description":"개발 im \n","pdf":"/uploads/pyeongtaek-dongsak-pf-feasibility.pdf"},{"image":"/uploads/project-1764155902904-1764155903466.png","video":"","title":"2023 타경 84047 경매 물건 보고서 ","description":"매탄동 임광아파트 ","pdf":"/uploads/auction-property-report.pdf"},{"image":"/uploads/project-1764156001590-1764156001951.png","video":"","title":"2023타경116839 투자물건 분석 리포트","description":"2024.10.31","pdf":"/uploads/auction-2023-116839-investment-report.pdf"},{"image":"/uploads/project-1764156121225-1764156121286.png","video":"","title":"금전소비대차계약의 성립 요건과 무효 취소 사유 및 법적 효과에 관한 고찰","description":".","pdf":"/uploads/loan-contract-nullity-cancellation-analysis.pdf"},{"image":"/uploads/project-1764156204034-1764156204092.png","video":"","title":"연속된 과실행위에 대한 민사, 형사상 법적 책임 고찰","description":"- 교통사고 및 의료과실 사례를 중심으로 -","pdf":"/uploads/consecutive-tort-criminal-liability.pdf"},{"image":"/uploads/project-10-1764157253977.png","video":"","title":"업무지구 내에서의 주차공간 활용분석과 개선 방안","description":"-판교 테크노밸리를 중심으로 -","pdf":"/uploads/office-district-parking-analysis.pdf"},{"image":"/uploads/project-1764156372865-1764156372956.png","video":"","title":"광교 원희캐슬 B동 수익성 개선안","description":"개선안 ","pdf":"/uploads/advertising-bldg-b-profitability.pdf"},{"image":"/uploads/project-1764156491010-1764156491442.png","video":"","title":"AI 드론 'ToToRANG'을 이용한 산림 보호 전략 ","description":"연구 ","pdf":"/uploads/totorang-ai-forest-protection.pdf"},{"image":"/uploads/project-1764156512671-1764156512752.png","video":"","title":"신촌 민자역사 공실 문제 해결을 위한 청년주택 및 주거단지 계획 연구 ","description":"연구 ","pdf":"/uploads/sinchon-station-youth-housing-solution.pdf"},{"image":"/uploads/project-1764156670012-1764156670164.png","video":"","title":"코리빙 하우스  ","description":": 국내 및 해외사례 탐구와 국내 정착 가능성 분석을 중심으로 ","pdf":"/uploads/coliving-house-study.pdf"},{"image":"/uploads/project-1764156780927-1764156781049.png","video":"","title":"상암 소각장 건립 계획이 상암 월드컵 아파트 3단지 실거래가에 미친 영향 ","description":"(2021~2025)","pdf":"/uploads/sangam-dmc-office-report.pdf"},{"image":"/uploads/project-1764156894283-1764156894400.png","video":"","title":"책임준공확약형 관리형 토지신탁의 구조적 특징과 리스크 관리","description":"-코람코자산신탁을 중심으로-","pdf":"/uploads/completion-guarantee-trust-structure.pdf"},{"image":"/uploads/project-1764156954366-1764156954457.png","video":"","title":"스타벅스 입지 경쟁력 비교 연구","description":"- 건대 후문점, 판교 유스페이스점을 중심으로 -","pdf":"/uploads/starbucks-real-estate-location.pdf"},{"image":"/uploads/project-1764157020024-1764157020103.png","video":"","title":"동아시아 친환경 스마트시티 비교 ","description":"-일본 카시와노하와 송도국제도시의 환경적 지속가능성 전략- ","pdf":"/uploads/east-asia-smartcity-eco-presentation.pdf"},{"image":"/uploads/project-1764157306559-1764157306606.png","video":"","title":"2024 타경 754 (임의) ","description":"강서 마곡 메가타워 경매 리포트","pdf":"/uploads/magok-megatower-auction-report.pdf"},{"image":"/uploads/project-1764157374474-1764157374532.png","video":"","title":"서울시 도시 정책의 방향성과 한계점 ","description":":2040 서울 도시기본계획을 중심으로 ","pdf":"/uploads/seoul-urban-policy-limitations.pdf"},{"image":"/uploads/project-1764157469467-1764157469531.png","video":"","title":"성수동 SKV1 임장분석 보고서","description":".","pdf":"/uploads/seongju-skv1-field-report.pdf"}] as Array<{ image: string; video?: string; title: string; description: string }>
+    background: {
+      image: "/uploads/projects-background-1764474166626.png",
+      video: "",
+      color: "",
+      opacity: 0.5
+    },
+    projects: [
+      {
+        image: "/uploads/project-0-1764136569015.png",
+        video: "",
+        title:
+          "「프로젝트 리츠의 구조적 특징과 PF 대출의 대체 가능성에 대한 실증적 고찰」",
+        description: "-금융구조도 설계와 정책방안, 3기 신도시 적용 검토를 중심으로-",
+        pdf: "/uploads/reits-pf-study.pdf"
+      },
+      {
+        image: "/uploads/project-1764136690001-1764136690096.png",
+        video: "",
+        title: "「주택담보대출금리의 지연효과에 관한 실증분석」",
+        description: "-코로나19 전후 주택시장 주요 지표의 비교를 중심으로",
+        pdf: "/uploads/home-mortgage-interest-analysis.pdf"
+      },
+      {
+        image: "/uploads/project-1764155454020-1764155456104.png",
+        video: "",
+        title: "스트레스 DSR 도입 이후 주택금융시장 변화 분석 ",
+        description: ".",
+        pdf: "/uploads/stress-dsr-housing-finance-analysis.pdf"
+      },
+      {
+        image: "/uploads/project-1764155573820-1764155573883.png",
+        video: "",
+        title: "씨드큐브 창동 사례로 본 공공 리츠 운영 리스크와 개선 방안 연구 ",
+        description: "연구 ",
+        pdf: "/uploads/seedsquare-changdong-public-reit-analysis.pdf"
+      },
+      {
+        image: "/uploads/project-1764155617696-1764155617749.png",
+        video: "",
+        title: "세운상가 3-2. 3구역 사례를 통해 본 부동산 PF구조의 가능성과 한계 ",
+        description: "연구",
+        pdf: "/uploads/seun-sanga-pf-structure-risk.pdf"
+      },
+      {
+        image: "/uploads/project-1764155793327-1764155793489.png",
+        video: "",
+        title: "평택시 동삭동 라움 프라자 신축 사업 PF ",
+        description: "개발 im \n",
+        pdf: "/uploads/pyeongtaek-dongsak-pf-feasibility.pdf",
+        excel: "/uploads/pyeongtaek-pf-income.xls" // 🔹 엑셀 경로
+      },
+      {
+        image: "/uploads/project-1764155902904-1764155903466.png",
+        video: "",
+        title: "2023 타경 84047 경매 물건 보고서 ",
+        description: "매탄동 임광아파트 ",
+        pdf: "/uploads/auction-property-report.pdf"
+      },
+      {
+        image: "/uploads/project-1764156001590-1764156001951.png",
+        video: "",
+        title: "2023타경116839 투자물건 분석 리포트",
+        description: "2024.10.31",
+        pdf: "/uploads/auction-2023-116839-investment-report.pdf"
+      },
+      {
+        image: "/uploads/project-1764156121225-1764156121286.png",
+        video: "",
+        title:
+          "금전소비대차계약의 성립 요건과 무효 취소 사유 및 법적 효과에 관한 고찰",
+        description: ".",
+        pdf: "/uploads/loan-contract-nullity-cancellation-analysis.pdf"
+      },
+      {
+        image: "/uploads/project-1764156204034-1764156204092.png",
+        video: "",
+        title: "연속된 과실행위에 대한 민사, 형사상 법적 책임 고찰",
+        description: "- 교통사고 및 의료과실 사례를 중심으로 -",
+        pdf: "/uploads/consecutive-tort-criminal-liability.pdf"
+      },
+      {
+        image: "/uploads/project-10-1764157253977.png",
+        video: "",
+        title: "업무지구 내에서의 주차공간 활용분석과 개선 방안",
+        description: "-판교 테크노밸리를 중심으로 -",
+        pdf: "/uploads/office-district-parking-analysis.pdf"
+      },
+      {
+        image: "/uploads/project-1764156372865-1764156372956.png",
+        video: "",
+        title: "광교 원희캐슬 B동 수익성 개선안",
+        description: "개선안 ",
+        pdf: "/uploads/advertising-bldg-b-profitability.pdf"
+      },
+      {
+        image: "/uploads/project-1764156491010-1764156491442.png",
+        video: "",
+        title: "AI 드론 'ToToRANG'을 이용한 산림 보호 전략 ",
+        description: "연구 ",
+        pdf: "/uploads/totorang-ai-forest-protection.pdf"
+      },
+      {
+        image: "/uploads/project-1764156512671-1764156512752.png",
+        video: "",
+        title: "신촌 민자역사 공실 문제 해결을 위한 청년주택 및 주거단지 계획 연구 ",
+        description: "연구 ",
+        pdf: "/uploads/sinchon-station-youth-housing-solution.pdf"
+      },
+      {
+        image: "/uploads/project-1764156670012-1764156670164.png",
+        video: "",
+        title: "코리빙 하우스  ",
+        description:
+          ": 국내 및 해외사례 탐구와 국내 정착 가능성 분석을 중심으로 ",
+        pdf: "/uploads/coliving-house-study.pdf"
+      },
+      {
+        image: "/uploads/project-1764156780927-1764156781049.png",
+        video: "",
+        title:
+          "상암 소각장 건립 계획이 상암 월드컵 아파트 3단지 실거래가에 미친 영향 ",
+        description: "(2021~2025)",
+        pdf: "/uploads/sangam-dmc-office-report.pdf"
+      },
+      {
+        image: "/uploads/project-1764156894283-1764156894400.png",
+        video: "",
+        title: "책임준공확약형 관리형 토지신탁의 구조적 특징과 리스크 관리",
+        description: "-코람코자산신탁을 중심으로-",
+        pdf: "/uploads/completion-guarantee-trust-structure.pdf"
+      },
+      {
+        image: "/uploads/project-1764156954366-1764156954457.png",
+        video: "",
+        title: "스타벅스 입지 경쟁력 비교 연구",
+        description: "- 건대 후문점, 판교 유스페이스점을 중심으로 -",
+        pdf: "/uploads/starbucks-real-estate-location.pdf"
+      },
+      {
+        image: "/uploads/project-1764157020024-1764157020103.png",
+        video: "",
+        title: "동아시아 친환경 스마트시티 비교 ",
+        description: "-일본 카시와노하와 송도국제도시의 환경적 지속가능성 전략- ",
+        pdf: "/uploads/east-asia-smartcity-eco-presentation.pdf"
+      },
+      {
+        image: "/uploads/project-1764157306559-1764157306606.png",
+        video: "",
+        title: "2024 타경 754 (임의) ",
+        description: "강서 마곡 메가타워 경매 리포트",
+        pdf: "/uploads/magok-megatower-auction-report.pdf"
+      },
+      {
+        image: "/uploads/project-1764157374474-1764157374532.png",
+        video: "",
+        title: "서울시 도시 정책의 방향성과 한계점 ",
+        description: ":2040 서울 도시기본계획을 중심으로 ",
+        pdf: "/uploads/seoul-urban-policy-limitations.pdf"
+      },
+      {
+        image: "/uploads/project-1764157469467-1764157469531.png",
+        video: "",
+        title: "성수동 SKV1 임장분석 보고서",
+        description: ".",
+        pdf: "/uploads/seongju-skv1-field-report.pdf"
+      }
+    ] as Array<ProjectItem>
   }
 
   const [projectsInfo, setProjectsInfo] = useState(defaultInfo)
@@ -41,21 +207,18 @@ export function Projects() {
     image: "",
     title: "",
     description: "",
-    pdf: ""
+    pdf: "",
+    excel: ""
   })
   const [backgroundData, setBackgroundData] = useState(defaultInfo.background)
 
-  // localStorage에서 데이터 로드 - 편집 모드가 변경될 때마다 실행
   useEffect(() => {
     const savedData = getData("projects-info") as typeof defaultInfo | null
     if (savedData) {
       const mergedData = { ...defaultInfo, ...savedData }
       setProjectsInfo(mergedData)
       setDisplayCount(mergedData.initialDisplay || defaultInfo.initialDisplay)
-
-      if (savedData.background) {
-        setBackgroundData(savedData.background)
-      }
+      if (savedData.background) setBackgroundData(savedData.background)
     }
 
     const savedBg = getData("projects-background") as {
@@ -64,9 +227,7 @@ export function Projects() {
       color: string
       opacity: number
     } | null
-    if (savedBg) {
-      setBackgroundData(savedBg)
-    }
+    if (savedBg) setBackgroundData(savedBg)
   }, [isEditMode])
 
   const updateProjectsInfo = async (
@@ -126,7 +287,6 @@ export function Projects() {
     await updateProjectsInfo("projects", newProjects)
   }
 
-  // 표시할 프로젝트들
   const validProjects = projectsInfo.projects
   const visibleProjects = isEditMode
     ? validProjects
@@ -139,36 +299,23 @@ export function Projects() {
     )
   }
 
-  // 이미지 비율 감지
   const detectImageAspect = (src: string) => {
     if (!src) return
-
     const img = new Image()
     img.onload = () => {
       const ratio = img.width / img.height
       let aspectClass: string
 
-      if (ratio >= 1.7 && ratio <= 1.8) {
-        aspectClass = "aspect-video"
-      } else if (ratio >= 1.3 && ratio <= 1.35) {
-        aspectClass = "aspect-[4/3]"
-      } else if (ratio >= 0.95 && ratio <= 1.05) {
-        aspectClass = "aspect-square"
-      } else if (ratio >= 0.74 && ratio <= 0.76) {
-        aspectClass = "aspect-[3/4]"
-      } else if (ratio >= 0.55 && ratio <= 0.57) {
-        aspectClass = "aspect-[9/16]"
-      } else if (ratio >= 1.4 && ratio <= 1.45) {
-        aspectClass = "aspect-[3/2]"
-      } else if (ratio >= 0.65 && ratio <= 0.67) {
-        aspectClass = "aspect-[2/3]"
-      } else if (ratio > 1.8) {
-        aspectClass = "aspect-[21/9]"
-      } else if (ratio < 0.55) {
-        aspectClass = "aspect-[1/2]"
-      } else {
-        aspectClass = ratio > 1 ? "aspect-video" : "aspect-[3/4]"
-      }
+      if (ratio >= 1.7 && ratio <= 1.8) aspectClass = "aspect-video"
+      else if (ratio >= 1.3 && ratio <= 1.35) aspectClass = "aspect-[4/3]"
+      else if (ratio >= 0.95 && ratio <= 1.05) aspectClass = "aspect-square"
+      else if (ratio >= 0.74 && ratio <= 0.76) aspectClass = "aspect-[3/4]"
+      else if (ratio >= 0.55 && ratio <= 0.57) aspectClass = "aspect-[9/16]"
+      else if (ratio >= 1.4 && ratio <= 1.45) aspectClass = "aspect-[3/2]"
+      else if (ratio >= 0.65 && ratio <= 0.67) aspectClass = "aspect-[2/3]"
+      else if (ratio > 1.8) aspectClass = "aspect-[21/9]"
+      else if (ratio < 0.55) aspectClass = "aspect-[1/2]"
+      else aspectClass = ratio > 1 ? "aspect-video" : "aspect-[3/4]"
 
       setImageAspects(prev => ({ ...prev, [src]: aspectClass }))
     }
@@ -182,7 +329,6 @@ export function Projects() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [validProjects.length])
 
-  // ESC 키로 모달 닫기
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelectedImage(null)
@@ -191,8 +337,6 @@ export function Projects() {
     return () => window.removeEventListener("keydown", handleEsc)
   }, [])
 
-  // 👉 배경 이미지: 인라인 에디터에서 선택한 게 있으면 그걸 쓰고,
-  // 없으면 기본 projects-bg.jpg 사용
   const bgImage = backgroundData.image || "/uploads/projects-bg.jpg"
 
   return (
@@ -214,11 +358,7 @@ export function Projects() {
         storageKey="projects-background"
         className="relative"
       >
-        <section
-          id="projects"
-          className="relative w-full py-20 overflow-hidden"
-        >
-          {/* 배경 이미지 + 어두운 오버레이 */}
+        <section id="projects" className="relative w-full py-20 overflow-hidden">
           <div className="absolute inset-0">
             <img
               src={bgImage}
@@ -228,9 +368,7 @@ export function Projects() {
             <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" />
           </div>
 
-          {/* 실제 콘텐츠 영역 */}
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* 섹션 제목 */}
             <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-white">
                 <EditableText
@@ -248,7 +386,6 @@ export function Projects() {
               </p>
             </div>
 
-            {/* 프로젝트가 없을 때 */}
             {validProjects.length === 0 && !isEditMode ? (
               <div className="text-center py-20">
                 <span className="text-6xl block mb-4">🚀</span>
@@ -287,19 +424,17 @@ export function Projects() {
                         </button>
                       )}
 
-                      {/* 상단 뱃지 / 인덱스 */}
                       <div className="flex items-center justify-between mb-3">
                         <span className="inline-flex items-center justify-center rounded-full px-3 py-1 text-[11px] font-medium bg-emerald-500/10 text-emerald-100 border border-emerald-400/40">
                           프로젝트 {String(index + 1).padStart(2, "0")}
                         </span>
-                        {!isEditMode && project.pdf && (
+                        {!isEditMode && (project.pdf || project.excel) && (
                           <span className="text-[11px] px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-200 border border-emerald-400/40">
-                            PDF 첨부됨
+                            자료 첨부됨
                           </span>
                         )}
                       </div>
 
-                      {/* 이미지 / 비디오 영역 */}
                       <div
                         className={`relative ${aspectClass} rounded-xl bg-slate-900/80 mb-3 overflow-hidden`}
                       >
@@ -325,7 +460,6 @@ export function Projects() {
                         )}
                       </div>
 
-                      {/* 텍스트 영역 */}
                       <div className="flex flex-col flex-grow gap-2">
                         <h3 className="font-semibold text-base text-white">
                           <EditableText
@@ -347,7 +481,7 @@ export function Projects() {
                           />
                         </p>
 
-                        {/* PDF 링크 영역 */}
+                        {/* PDF & 엑셀 버튼 */}
                         <div className="mt-3">
                           {isEditMode ? (
                             <>
@@ -362,31 +496,68 @@ export function Projects() {
                                 }
                                 onClick={e => e.stopPropagation()}
                                 placeholder="예: /uploads/report1.pdf 또는 https://..."
+                                className="w-full text-xs bg-white text-slate-900 placeholder:text-slate-400 border border-slate-500 rounded-md px-2 py-1 mb-2"
+                              />
+                              <p className="text-xs font-medium text-slate-300 mb-1">
+                                엑셀 링크 (선택)
+                              </p>
+                              <input
+                                type="text"
+                                value={project.excel || ""}
+                                onChange={e =>
+                                  updateProject(index, "excel", e.target.value)
+                                }
+                                onClick={e => e.stopPropagation()}
+                                placeholder="예: /uploads/data.xlsx 또는 https://..."
                                 className="w-full text-xs bg-white text-slate-900 placeholder:text-slate-400 border border-slate-500 rounded-md px-2 py-1"
                               />
                             </>
-                          ) : project.pdf ? (
-                            <button
-                              className="w-full inline-flex items-center justify-between rounded-lg border border-emerald-500/40 bg-slate-950/80 px-3 py-2 text-xs text-emerald-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition-all"
-                              onClick={e => {
-                                e.stopPropagation()
-                                window.open(
-                                  project.pdf,
-                                  "_blank",
-                                  "noopener,noreferrer"
-                                )
-                              }}
-                            >
-                              <span className="inline-flex items-center gap-1">
-                                📄 <span>PDF 보기</span>
-                              </span>
-                              <span className="text-[10px] text-emerald-200/70">
-                                새 창에서 열기
-                              </span>
-                            </button>
+                          ) : project.pdf || project.excel ? (
+                            <div className="flex flex-col gap-2">
+                              {project.pdf && (
+                                <button
+                                  className="w-full inline-flex items-center justify-between rounded-lg border border-emerald-500/40 bg-slate-950/80 px-3 py-2 text-xs text-emerald-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition-all"
+                                  onClick={e => {
+                                    e.stopPropagation()
+                                    window.open(
+                                      project.pdf,
+                                      "_blank",
+                                      "noopener,noreferrer"
+                                    )
+                                  }}
+                                >
+                                  <span className="inline-flex items-center gap-1">
+                                    📄 <span>PDF 보기</span>
+                                  </span>
+                                  <span className="text-[10px] text-emerald-200/70">
+                                    새 창에서 열기
+                                  </span>
+                                </button>
+                              )}
+                              {project.excel && (
+                                <button
+                                  className="w-full inline-flex items-center justify-between rounded-lg border border-emerald-500/40 bg-slate-950/80 px-3 py-2 text-xs text-emerald-200 hover:border-emerald-400 hover:bg-emerald-500/10 transition-all"
+                                  onClick={e => {
+                                    e.stopPropagation()
+                                    window.open(
+                                      project.excel,
+                                      "_blank",
+                                      "noopener,noreferrer"
+                                    )
+                                  }}
+                                >
+                                  <span className="inline-flex items-center gap-1">
+                                    📊 <span>엑셀 파일 보기</span>
+                                  </span>
+                                  <span className="text-[10px] text-emerald-200/70">
+                                    새 창에서 다운로드
+                                  </span>
+                                </button>
+                              )}
+                            </div>
                           ) : (
                             <p className="text-xs text-slate-400">
-                              등록된 PDF가 없습니다.
+                              등록된 자료가 없습니다.
                             </p>
                           )}
                         </div>
@@ -395,7 +566,6 @@ export function Projects() {
                   )
                 })}
 
-                {/* 편집 모드일 때 프로젝트 추가 카드 */}
                 {isEditMode && (
                   <div
                     className="h-full min-h-[260px] border-2 border-dashed border-emerald-500/40 rounded-2xl flex items-center justify-center cursor-pointer hover:border-emerald-400 hover:bg-emerald-500/5 transition-all"
@@ -410,7 +580,6 @@ export function Projects() {
               </div>
             )}
 
-            {/* 더보기 버튼 */}
             {hasMoreProjects && !isEditMode && (
               <div className="text-center mt-10">
                 <button
@@ -424,7 +593,6 @@ export function Projects() {
               </div>
             )}
 
-            {/* 표시 설정 버튼 (편집 모드에서만) */}
             {isEditMode && (
               <div className="text-center mt-8">
                 <button
@@ -495,7 +663,7 @@ export function Projects() {
         </div>
       )}
 
-      {/* 프로젝트 추가 모달 */}
+      {/* 새 프로젝트 추가 모달 */}
       {showProjectModal && isEditMode && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
           <div className="bg-background border rounded-lg p-6 max-w-2xl w-full mx-4">
@@ -503,7 +671,10 @@ export function Projects() {
               <h3 className="text-lg font-semibold">새 프로젝트 추가</h3>
               <button
                 onClick={async () => {
-                  if (newProject.image && newProject.image.includes("/uploads/")) {
+                  if (
+                    newProject.image &&
+                    newProject.image.includes("/uploads/")
+                  ) {
                     try {
                       await fetch("/api/delete-image", {
                         method: "DELETE",
@@ -518,7 +689,8 @@ export function Projects() {
                     image: "",
                     title: "",
                     description: "",
-                    pdf: ""
+                    pdf: "",
+                    excel: ""
                   })
                   setShowProjectModal(false)
                 }}
@@ -637,7 +809,7 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* 프로젝트 제목 */}
+              {/* 제목 */}
               <div>
                 <label className="text-sm font-medium mb-1 block">
                   프로젝트 제목
@@ -653,7 +825,7 @@ export function Projects() {
                 />
               </div>
 
-              {/* 프로젝트 설명 */}
+              {/* 설명 */}
               <div>
                 <label className="text-sm font-medium mb-1 block">
                   프로젝트 설명
@@ -672,7 +844,7 @@ export function Projects() {
                 />
               </div>
 
-              {/* PDF 링크 */}
+              {/* PDF */}
               <div>
                 <label className="text-sm font-medium mb-1 block">
                   PDF 링크 (선택)
@@ -686,10 +858,22 @@ export function Projects() {
                   placeholder="예: /uploads/report1.pdf 또는 https://..."
                   className="w-full px-3 py-2 border rounded-lg bg-white text-slate-900 text-sm placeholder:text-slate-400"
                 />
-                <p className="text-xs text-muted-foreground mt-1">
-                  PDF 파일을 public/uploads 폴더에 넣은 뒤 경로를 입력하거나,
-                  외부 URL을 직접 입력할 수 있어요.
-                </p>
+              </div>
+
+              {/* 엑셀 */}
+              <div>
+                <label className="text-sm font-medium mb-1 block">
+                  엑셀 링크 (선택)
+                </label>
+                <input
+                  type="text"
+                  value={newProject.excel}
+                  onChange={e =>
+                    setNewProject({ ...newProject, excel: e.target.value })
+                  }
+                  placeholder="예: /uploads/data.xlsx 또는 https://..."
+                  className="w-full px-3 py-2 border rounded-lg bg-white text-slate-900 text-sm placeholder:text-slate-400"
+                />
               </div>
             </div>
 
@@ -706,7 +890,8 @@ export function Projects() {
                       video: isVideo ? newProject.image : "",
                       title: newProject.title,
                       description: newProject.description,
-                      pdf: newProject.pdf || undefined
+                      pdf: newProject.pdf || undefined,
+                      excel: newProject.excel || undefined
                     }
                     const updatedProjects = [
                       ...projectsInfo.projects,
@@ -724,15 +909,14 @@ export function Projects() {
                       "Info",
                       updatedInfo
                     )
-                    if (success) {
-                      alert("✅ 프로젝트가 추가되고 파일에 저장되었습니다!")
-                    }
+                    if (success) alert("✅ 프로젝트가 추가되고 파일에 저장되었습니다!")
 
                     setNewProject({
                       image: "",
                       title: "",
                       description: "",
-                      pdf: ""
+                      pdf: "",
+                      excel: ""
                     })
                     setShowProjectModal(false)
                   } else {
@@ -745,7 +929,10 @@ export function Projects() {
               </button>
               <button
                 onClick={async () => {
-                  if (newProject.image && newProject.image.includes("/uploads/")) {
+                  if (
+                    newProject.image &&
+                    newProject.image.includes("/uploads/")
+                  ) {
                     try {
                       await fetch("/api/delete-image", {
                         method: "DELETE",
@@ -760,7 +947,8 @@ export function Projects() {
                     image: "",
                     title: "",
                     description: "",
-                    pdf: ""
+                    pdf: "",
+                    excel: ""
                   })
                   setShowProjectModal(false)
                 }}
@@ -788,7 +976,6 @@ export function Projects() {
             </div>
 
             <div className="space-y-6">
-              {/* 초기 표시 개수 */}
               <div>
                 <label className="text-sm font-medium mb-2 block">
                   처음에 보여줄 프로젝트 개수
@@ -831,7 +1018,6 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* 더보기 클릭 시 추가 개수 */}
               <div>
                 <label className="text-sm font-medium mb-2 block">
                   더보기 클릭 시 추가로 보여줄 개수
@@ -870,7 +1056,6 @@ export function Projects() {
                 </div>
               </div>
 
-              {/* 현재 상태 미리보기 */}
               <div className="p-4 bg-muted/30 rounded-lg">
                 <p className="text-sm font-medium mb-2">현재 설정:</p>
                 <div className="text-sm text-muted-foreground space-y-1">
@@ -920,9 +1105,7 @@ export function Projects() {
                     "Info",
                     projectsInfo
                   )
-                  if (success) {
-                    alert("✅ 프로젝트 설정이 파일에 저장되었습니다!")
-                  }
+                  if (success) alert("✅ 프로젝트 설정이 파일에 저장되었습니다!")
                   setShowDisplaySettings(false)
                 }}
                 className="flex-1 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
