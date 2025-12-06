@@ -283,12 +283,13 @@ export function Skills() {
             transition={{ duration: 0.5 }}
             className="rounded-2xl overflow-hidden bg-black border border-slate-700/80 shadow-md"
           >
-            <div className="aspect-video w-full">
+            {/* 고정 높이 줘서 항상 보이게 */}
+            <div className="w-full h-56 md:h-64 lg:h-72">
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/Ve5npKkEUuQ?autoplay=1&mute=1&loop=1&playlist=Ve5npKkEUuQ"
                 title="대외활동 소개 영상"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
                 allowFullScreen
               />
             </div>
