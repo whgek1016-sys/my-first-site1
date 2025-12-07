@@ -16,7 +16,7 @@ export function Hero() {
     <section className="w-full py-28 bg-slate-950 text-center text-white flex flex-col items-center">
       {/* 메인 타이틀 */}
       <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-        임지원 Portfolio
+        Building My Perspective.
       </h1>
 
       {/* 🔥 타이핑되는 한 줄 소개 */}
@@ -27,8 +27,8 @@ export function Hero() {
 
       {/* 부가 소개 텍스트 */}
       <p className="mt-2 max-w-xl text-slate-400 text-sm md:text-base leading-relaxed">
-        PF · 신탁 · REITs · 데이터 분석까지  
-        융합적으로 수행하는 부동산 금융 분석가입니다.
+        현장을 이해하고 구조를 파악하는 부동산 인재가 되기 위해
+        PF · 신탁 · REITs를 중심으로 공부하고 있습니다.
       </p>
     </section>
   );

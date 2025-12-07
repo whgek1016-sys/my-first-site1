@@ -65,7 +65,7 @@ export function Contact() {
     workTime: "평일 09:00 - 18:00",
     responseTime: "24시간 이내 응답",
     sectionTitle: "Contacts",
-    sectionSubtitle: "프로젝트를 더 단단하게 만들 수 있는 대화와 협업을 환영합니다.\n\n필요하신 것이 있다면 편하게 연락주세요.",
+    sectionSubtitle: "도시와 금융, 그리고 데이터를 잇는 시선으로\n프로젝트의 구조를 다시 설계합니다.\n함께 새로운 가치를 만들고 싶다면 언제든 편하게 연락주세요.",
     qrTitle: "QR 코드로 연락처 저장",
     qrSubtitle: "스캔하면 연락처가 자동으로 저장됩니다",
     bottomMessage: "부동삶, 흔들리지 않는 삶을 설계합니다.",
@@ -76,8 +76,18 @@ export function Contact() {
   }
 
   // 소셜 링크 기본값 (배열 형태로 변경)
-  const defaultSocialLinks: { name: string; icon: string; url: string }[] = []
-
+  const defaultSocialLinks: { name: string; icon: string; url: string }[] = [
+  {
+    name: "Instagram",
+    icon: "instagram",
+    url: "https://www.instagram.com/icandowhateveriwant__?igsh=MWN1a3ljNDZ2OHd6dQ%3D%3D&utm_source=qr",
+  },
+  {
+    name: "Blog",
+    icon: "globe",
+    url: "https://m.blog.naver.com/whgek1120/222828796666",
+  },
+]
   const [contactInfo, setContactInfo] = useState(defaultInfo)
   const [socialLinks, setSocialLinks] = useState(defaultSocialLinks)
   const [backgroundData, setBackgroundData] = useState(defaultInfo.background)
@@ -360,8 +370,8 @@ export function Contact() {
                 )}
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/5">
-                <div className="flex flex-wrap gap-3">
+              <div className="p-2 rounded-xl bg-white/5 w-fit mx-auto">
+                <div className="flex items-center gap-2">
                   {socialLinks.map((link, index) => {
                     if (!link.url) return null
                     const Icon =
