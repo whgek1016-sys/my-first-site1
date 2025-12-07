@@ -178,9 +178,9 @@ export function Profile() {
             </h2>
 
             <p className="text-sm md:text-base text-slate-200 text-center md:text-left leading-relaxed">
-              “PF·신탁·REITs를 실제 사례로 분석하며, 개발·금융·법률이 만나는 구조의 흐름을 해석합니다.
+              PF·신탁·REITs를 실제 사례로 분석하며, 개발·금융·법률이 만나는 구조의 흐름을 해석합니다.
               <br className="hidden md:block" />
-              데이터·문헌·현장 정보를 결합해 복잡한 구조를 명확한 인사이트로 재구성합니다.”
+              데이터·문헌·현장 정보를 결합해 복잡한 구조를 명확한 인사이트로 재구성합니다.
             </p>
 
             <div className="mt-6 flex flex-wrap justify-center gap-3">
